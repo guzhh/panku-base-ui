@@ -1,6 +1,6 @@
 <template>
 	<page-content>
-		<n-card size="small" title="机构列表">
+		<n-card size="small">
 			<template #header>
 				<n-select
 					v-model:value="ifDel"
