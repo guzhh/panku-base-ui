@@ -3,9 +3,7 @@
 		<n-card size="small" title="参数列表" style="width: 290px">
 			<template #header>参数分类</template>
 			<template #header-extra>
-				<n-button size="small" style="margin-left: 10px" type="primary" @click="dictModalRef.open({ code: 'PARAM_CLASS' })"
-					>新增分类</n-button
-				>
+				<n-button style="margin-left: 10px" type="primary" @click="dictModalRef.open({ code: 'PARAM_CLASS' })">新增分类</n-button>
 			</template>
 			<vxe-table
 				stripe
@@ -46,7 +44,7 @@
 			</vxe-table>
 			<DictModal ref="dictModalRef"></DictModal>
 		</n-card>
-		<n-card size="small" title="参数列表" style="width: calc(100% - 300px)">
+		<n-card size="small" style="width: calc(100% - 300px)">
 			<template #header>
 				<n-input
 					style="width: 300px"

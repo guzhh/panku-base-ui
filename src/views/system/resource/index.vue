@@ -2,7 +2,7 @@
 	<page-content>
 		<n-card size="small" title="资源列表">
 			<template #header-extra>
-				<n-button size="small" type="primary" @click="addNewResources">新增资源</n-button>
+				<n-button type="primary" @click="addNewResources">新增资源</n-button>
 				<n-tooltip>
 					<span>折叠</span>
 					<template #trigger>
@@ -40,7 +40,7 @@
 				ref="tableRef"
 				show-overflow
 				:data="tableData"
-				:height="height - 100"
+				:height="height - 105"
 				:loading="tableLoading"
 				:size="tableSize"
 				:column-config="{ resizable: false }"

@@ -16,3 +16,6 @@ export const ifUse = [
 	{ label: "启用", value: 1, color: "#2878fc" },
 	{ label: "禁用", value: 0, color: "#ff5b5a" }
 ];
+
+// 时间分隔符
+export const DATE_SPLIT = " ~ ";

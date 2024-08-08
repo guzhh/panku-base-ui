@@ -8,7 +8,7 @@
 				<dep-tree ref="DepTreeRef" @selectDep="selectDep"></dep-tree>
 
 				<div style="width: calc(100% - 400px); padding-right: 10px">
-					<n-card style="margin-left: 5px" title="用户列表">
+					<n-card style="margin-left: 5px">
 						<template #header>
 							<n-space>
 								<n-input
