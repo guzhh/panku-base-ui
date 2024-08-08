@@ -1,7 +1,7 @@
 tempDir: D:\temp\java-project # 项目升级过程中临时存储文件的位置
 projectPath: F:\panku\2023\盘古移动护理系统\src\mobile-care-ui # 要升级的项目所在目录
 # git 项目根路径
-gitUrl: https://gitee.com/hnpanku_1/vue-template.git # 项目模板的git地址
+gitUrl: https://gitee.com/hnpanku_1/panku-base-ui.git # 项目模板的git地址
 # 要升级的文件夹, 如果不想升级某个文件夹就把它注释掉
 folder:
   - /config
