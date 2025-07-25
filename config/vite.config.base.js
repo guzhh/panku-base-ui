@@ -47,6 +47,10 @@ export default defineConfig({
 					hack: `true; @import (reference) "${resolve("src/assets/style/breakpoint.less")}";`
 				},
 				javascriptEnabled: true
+			},
+			scss: {
+				api: "modern-compiler", // 或者 'modern-compiler'
+				silenceDeprecations: ["legacy-js-api"]
 			}
 		}
 	},

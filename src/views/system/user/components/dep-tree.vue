@@ -8,24 +8,32 @@
 		}"
 		:content-style="{ overflow: 'auto' }"
 	>
-		<n-tree
-			show-line
-			v-if="reLoad"
-			:cancelable="true"
-			:data="treeData"
-			:default-selected-keys="defaultSelect"
-			:on-load="handleLoad"
-			:render-label="treeRenderLabel"
-			block-line
-			@update-selected-keys="select"
-		/>
+		<div style="width: 100%; height: 100%; display: flex; flex-direction: column">
+			<div style="flex-shrink: 0">
+				<n-input v-model:value="pattern" placeholder="搜索科室" clearable />
+			</div>
+			<div style="flex: 1; min-height: 0; overflow: auto">
+				<n-tree
+					show-line
+					block-line
+					:pattern="pattern"
+					:cancelable="true"
+					:data="treeData"
+					:default-selected-keys="defaultSelect"
+					:render-label="treeRenderLabel"
+					@update-selected-keys="select"
+					:show-irrelevant-nodes="false"
+				/>
+			</div>
+		</div>
 	</n-card>
 </template>
 
 <script setup>
 import { h, ref, nextTick } from "vue";
-import { getDeptList } from "@/api/system/depAdmin";
+import { getDeptByOrgCode } from "@/api/system/depAdmin";
 
+const pattern = ref("");
 const treeData = ref([]);
 const defaultSelect = ref([]);
 const orgCode = ref();
@@ -48,12 +56,22 @@ const getDep = data => {
 	handleReLoad();
 	if (data.ifExist) {
 		orgCode.value = data.orgCode;
-		getDeptList({ pcode: "", orgCode: data.orgCode, ifDel: 0 }).then(res => {
+		getDeptByOrgCode({ orgCode: data.orgCode }).then(res => {
 			if (res.success) {
-				treeData.value = res.result.map(item => {
-					return { ...item, key: item.code, label: item.name, isLeaf: false };
+				const optionData = res.result.map(item => {
+					return { code: item.code, pcode: item.pcode ? item.pcode : "", key: item.code, label: item.name };
 				});
-				if (res.result.length > 0) {
+				// 转为树形数据
+				const cloneData = JSON.parse(JSON.stringify(optionData)); // 对源数据深度克隆,防止污染原始数据
+				treeData.value = cloneData.filter(father => {
+					const branchArr = cloneData.filter(child => father.code === child.pcode); // 返回每一项的子级数组
+					// eslint-disable-next-line no-unused-expressions,no-param-reassign
+					branchArr.length > 0 ? (father.children = branchArr) : ""; // 如果存在子级，则给父级添加一个children属性，并赋值
+					if (father.pcode === "") return true;
+					return !!cloneData.find(item => item.code === father.pcode);
+					// return ; // 返回第一层
+				});
+				if (treeData.value.length > 0) {
 					defaultSelect.value.splice(0, defaultSelect.value.length);
 					defaultSelect.value.push(treeData.value[0]?.key);
 					emits("selectDep", { depCode: treeData.value[0].code, depName: treeData.value[0].name, ifExist: true });
@@ -67,28 +85,6 @@ const getDep = data => {
 		orgCode.value = null;
 		emits("selectDep", { depCode: "", depName: "", ifExist: false });
 	}
-};
-
-const handleLoad = node => {
-	return new Promise(resolve => {
-		getDeptList({ pcode: node.code, orgCode: orgCode.value, ifDel: 0 })
-			.then(res => {
-				if (res.success) {
-					if (res.result.length <= 0) {
-						// eslint-disable-next-line no-param-reassign
-						node.isLeaf = true;
-					} else {
-						// eslint-disable-next-line no-param-reassign
-						node.children = res.result.map(item => {
-							return { ...item, key: item.code, label: item.name, isLeaf: false };
-						});
-					}
-				}
-			})
-			.finally(() => {
-				resolve();
-			});
-	});
 };
 
 // 选中科室

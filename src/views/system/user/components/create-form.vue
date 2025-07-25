@@ -155,7 +155,8 @@ const getDep = data => {
 				const branchArr = cloneData.filter(child => father.code === child.pcode); // 返回每一项的子级数组
 				// eslint-disable-next-line no-unused-expressions,no-param-reassign
 				branchArr.length > 0 ? (father.children = branchArr) : ""; // 如果存在子级，则给父级添加一个children属性，并赋值
-				return father.pcode === ""; // 返回第一层
+				if (father.pcode === "") return true;
+				return !!cloneData.find(item => item.code === father.pcode);
 			});
 		}
 	});
