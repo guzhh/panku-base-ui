@@ -86,12 +86,15 @@ const rules = {
 	state: { type: "number", required: true, message: "请选择字典状态", trigger: ["blur", "change"] }
 };
 
-const add = pcode => {
+const add = (pcode, sortNum) => {
 	title.value = "新增字典";
 	visible.value = true;
 	pcodes.value = pcode ? `${pcode}` : "";
 	formValue.value.pcode = pcode ? `${pcode}` : "";
 	ifEdit.value = false;
+	if (sortNum) {
+		formValue.value.sortNum = sortNum;
+	}
 };
 
 const edit = row => {
@@ -154,7 +157,7 @@ const submitAndAdd = () => {
 						code: "",
 						name: "",
 						dictVal: "",
-						sortNum: 1,
+						sortNum: formValue.value + 1,
 						state: 1
 					};
 				}

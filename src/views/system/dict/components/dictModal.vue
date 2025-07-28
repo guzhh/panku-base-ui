@@ -35,10 +35,9 @@
 				border="none"
 				:max-height="500"
 				resizable
-				row-id="code"
 				show-header-overflow="title"
 				show-overflow
-				:row-config="{ isHover: true, isCurrent: true }"
+				:row-config="{ isHover: true, isCurrent: true, keyField: 'code' }"
 			>
 				<vxe-column field="id" show-overflow="title" title="字典ID" width="80px"></vxe-column>
 				<vxe-column field="pcode" show-overflow="title" title="上级字典编码" width="150px"></vxe-column>
@@ -108,7 +107,10 @@ const getDictList = () => {
 
 // 新增字典
 const addDict = () => {
-	createFormRef.value.add(pcode.value);
+	createFormRef.value.add(
+		pcode.value,
+		tableData.value.length > 0 ? Math.max(...tableData.value.map(item => item.sortNum)) + 1 : 1
+	);
 };
 
 // 编辑字典
