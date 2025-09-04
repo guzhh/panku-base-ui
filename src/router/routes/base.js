@@ -43,6 +43,16 @@ export const BASE_MAIN = {
 				noAffix: false, // 是否不显示显示标签页
 				ignoreCache: false // 是否缓存
 			}
+		},
+		{
+			path: "helper",
+			name: "helper",
+			component: () => import("@/views/users/helper/index.vue"),
+			meta: {
+				title: "辅助工具",
+				noAffix: false, // 是否不显示显示标签页
+				ignoreCache: false // 是否缓存
+			}
 		}
 	]
 };

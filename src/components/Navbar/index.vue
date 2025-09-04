@@ -152,6 +152,7 @@ import { MoonSharp } from "@vicons/ionicons5";
 import { FullScreenMaximize24Regular, FullScreenMinimize24Regular } from "@vicons/fluent";
 import { MenuFoldOutlined, SettingOutlined, UserOutlined, ExportOutlined } from "@vicons/antd";
 import { License } from "@vicons/tabler";
+import { HireAHelper } from "@vicons/fa";
 import OrgSwitch from "@/components/OrgSwitch/index.vue";
 import DeptSwitch from "@/components/OrgSwitch/deptSwitch.vue";
 import { getCurrOrgInfo } from "@/api/system/orgAdmin";
@@ -203,29 +204,36 @@ const handleVersion = () => {
 	router.push({ name: "systemVersion" });
 };
 
-// const title = import.meta.env.VITE_SYSTEM_NAME; // 系统标题
-const userHandleOptions = [
-	{
-		label: "许可证",
-		key: "license",
-		icon: renderIcon(License)
-	},
-	// {
-	// 	label: "用户中心",
-	// 	key: "userCenter",
-	// 	icon: renderIcon(UserOutlined)
-	// },
-	{
-		label: "用户设置",
-		key: "userSettings",
-		icon: renderIcon(SettingOutlined)
-	},
-	{
-		label: "退出登录",
-		key: "logout",
-		icon: renderIcon(ExportOutlined)
+const userHandleOptions = computed(() => {
+	const options = [
+		{
+			label: "许可证",
+			key: "license",
+			icon: renderIcon(License)
+		},
+		{
+			label: "辅助工具",
+			key: "helper",
+			icon: renderIcon(HireAHelper)
+		},
+		{
+			label: "用户设置",
+			key: "userSettings",
+			icon: renderIcon(SettingOutlined)
+		},
+		{
+			label: "退出登录",
+			key: "logout",
+			icon: renderIcon(ExportOutlined)
+		}
+	];
+	const { dataScope } = userStore.userInfo;
+	console.info(userStore.userInfo, "🚀 ~ file:index.vue line:231 datascope");
+	if (dataScope === 1) {
+		return options;
 	}
-];
+	return options.filter(item => item.key !== "helper");
+});
 
 const orgData = ref({});
 
@@ -266,6 +274,10 @@ const handleOptionsFun = {
 	logout: handleLogout,
 	license: () => {
 		window.$globleTip.open();
+	},
+	// 辅助工具
+	helper: () => {
+		router.push({ name: "helper" });
 	}
 };
 
