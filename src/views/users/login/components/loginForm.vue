@@ -1,9 +1,5 @@
 <template>
 	<div class="login-form-wrapper">
-		<div class="login-form-sub-title">
-			<img src="@/assets/images/login/logo.jpg" height="24" width="88" />
-			<span style="margin-left: 12px">河南盘古信息技术有限公司</span>
-		</div>
 		<div class="login-form-title">{{ title }}</div>
 
 		<n-form ref="formRef" :model="userInfo" :rules="rules" label-placement="left" size="large">
@@ -160,7 +156,7 @@ const accountBlur = () => {
 	font-style: normal;
 	&-wrapper {
 		width: 100%;
-		padding: 0px 65px;
+		padding: 65px;
 	}
 	&-title {
 		color: #2b2b2e;
